@@ -30,8 +30,9 @@ public class UserDetailController {
         MUser user = userService.getUserOne(userId);
         user.setPassword(null);
 
-        // Get user
+        // Convert MUser to form
         form = modelMapper.map(user, UserDetailForm.class);
+        form.setSalaryList(user.getSalaryList());
 
         // Registered in Model
         model.addAttribute("userDetailForm", form);
