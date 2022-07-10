@@ -11,6 +11,6 @@ public class UserListController {
 	@GetMapping("/list")
 	public String getUserList() {
 		//Display user list screen
-		return "user/list";
+		return "user/list.html";
 	}
 }
