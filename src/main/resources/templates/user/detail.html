@@ -61,6 +61,15 @@
               <th>Gender</th>
               <td th:text="*{gender == 1 ? 'Male': 'Female'}"></td>
             </tr>
+            <tr>
+            	<th>Department name
+            	</th>
+            	<td>
+            		<span th:if="*{department != null}"
+            				th:text="*{department.departmentName}">
+            		</span>
+            	</td>
+            </tr>
           </tbody>
         </table>
         <!-- Button area -->
