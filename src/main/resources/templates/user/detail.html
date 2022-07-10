@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}"
+>
+  <head>
+    <title>User Details</title>
+    <!-- Read CSS -->
+    <link rel="stylesheet" th:href="@{/css/user/list.css}" />
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <div class="header border-bottom">
+        <h1 class="h2">User Details</h1>
+      </div>
+      <form
+        id="user-detail-form"
+        method="post"
+        th:action="@{/user/detail}"
+        class="form-signup"
+        th:object="${userDetailForm}"
+      >
+      	<input type="hidden" th:field="*{userId}" />
+        <!-- User Details information -->
+        <table class="table table-striped table-bordered table-hover">
+          <tbody>
+            <tr>
+              <th class="w-25">User ID</th>
+              <td th:text="*{userId}"></td>
+            </tr>
+            <tr>
+              <th>Password</th>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  th:field="*{password}"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>User Name</th>
+              <td>
+                <input
+                  type="text"
+                  class="form-control"
+                  th:field="*{userName}"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>Birthday</th>
+              <td th:text="*{#dates.format(birthday, 'dd/MM/YYYY')}"></td>
+            </tr>
+            <tr>
+              <th>Age</th>
+              <td th:text="*{age}"></td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td th:text="*{gender == 1 ? 'Male': 'Female'}"></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Button area -->
+		<div class ="text-center" >
+		<!-- Delete button -->
+		<button class ="btn btn-danger" type ="submit" name ="delete" >
+		delete
+		</button>
+		<!-- Update button -->
+		<button class ="btn btn-primary" type ="submit" name ="update" >
+		update
+		</button>
+		</div>
+      </form>
+    </div>
+  </body>
+</html>
