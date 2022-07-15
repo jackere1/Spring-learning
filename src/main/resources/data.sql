@@ -15,9 +15,9 @@ user_id
 , department_id
 , role
 ) VALUES
-('system@co.jp' , 'password' , 'System Administrator' , '2000-01-01' , 21, 1,
+('system@co.jp' , '$2a$10$D0uXqv84j1MauVw37alTgux8C9hBqdpvILpeaeflgvAEav9Li72yi' , 'System Administrator' , '2000-01-01' , 21, 1,
 1, 'ROLE_ADMIN' )
-, ('user@co.jp' , 'password' , 'User1' , '2000-01-01' , 21, 2, 2, 'ROLE_GEN
+, ('user@co.jp' , '$2a$10$D0uXqv84j1MauVw37alTgux8C9hBqdpvILpeaeflgvAEav9Li72yi' , 'User1' , '2000-01-01' , 21, 2, 2, 'ROLE_GEN
 ERAL' )
 ;
 /* Department master */

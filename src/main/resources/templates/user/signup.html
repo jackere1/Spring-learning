@@ -53,7 +53,8 @@
             <div class ="text-danger" th:if ="${#fields.hasErrors('gender')}" th:errors ="*{gender}" ></div>
         </div>
         <!-- Signup button -->
-        <input type ="submit" value ="signup" class ="btn btn-primary w-100 mt-1" th:value="#{user.signup.btn}"/>
+        <input type ="submit" class ="btn btn-primary w-100 mt-1" th:value="#{user.signup.btn}"/>
+        <input type ="hidden" th:name = "${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
 </body>
 </html>
