@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/login").permitAll() //Direct OK
 			.antMatchers("/user/signup").permitAll()
+			.antMatchers("/user/signup/rest").permitAll()
 			.antMatchers("/admin").hasAuthority("ROLE_ADMIN") //Authority control
 			.anyRequest().authenticated(); //Otherwise direct link NG
 		

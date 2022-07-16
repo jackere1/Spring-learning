@@ -8,6 +8,8 @@
     <title>User Details</title>
     <!-- Read CSS -->
     <link rel="stylesheet" th:href="@{/css/user/list.css}" />
+    <!-- Read JS -->
+    <script th:src="@{/js/user/detail.js}" defer></script>
   </head>
   <body>
     <div layout:fragment="content">
@@ -81,6 +83,17 @@
 		<!-- Update button -->
 		<button class ="btn btn-primary" type ="submit" name ="update" >
 		update
+		</button>
+		</div>
+		<!-- REST button area -->
+		<div class ="text-center mt-2" >
+		<!-- Delete button -->
+		<button id ="btn-delete" class ="btn btn-danger" type ="button" >
+		delete(REST)
+		</button>
+		<!-- Update button -->
+		<button id ="btn-update" class ="btn btn-primary" type ="button" >
+		update(REST)
 		</button>
 		</div>
 		<!-- Salary information -->
