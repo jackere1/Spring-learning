@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +54,11 @@ public class UserServiceImpl2 implements UserService{
 	/*Get users*/
 	@Override
 	public List<MUser> getUsers(MUser user) {
-		return repository.findAll();
+		//Search conditions
+		ExampleMatcher matcher = ExampleMatcher.matching() //Conditions
+				.withStringMatcher(StringMatcher.CONTAINING) //Like clause
+				.withIgnoreCase(); //case-insensitive
+		return repository.findAll(Example.of(user, matcher));
 	}
 	
 	/*Get user(1 record)*/
