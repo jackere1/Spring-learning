@@ -1,76 +1,92 @@
 package com.example.demo.domain.user.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.user.model.MUser;
 import com.example.demo.domain.user.service.UserService;
-import com.example.demo.repository.UserMapper;
+import com.example.demo.repository.UserRepository;
 
 @Service
-//@Primary
-public class UserServiceImpl implements UserService{
+@Primary
+public class UserServiceImpl2 implements UserService{
 	
 	@Autowired
-	private UserMapper mapper;
+	private UserRepository repository;
 	
 	@Autowired
 	@Lazy
 	private PasswordEncoder encoder;
 	
+	
 	/*User signup*/
+	@Transactional
 	@Override
 	public void signup(MUser user) {
+		//Existence check
+		boolean exists = repository.existsById(user.getUserId());
+		if(exists) {
+			throw new DataAccessException("User already exists") {};
+		}
+		
 		user.setDepartmentId(1);
 		user.setRole("ROLE_GENERAL");
 		
 		//Password encryption
 		String rawPassword = user.getPassword();
 		user.setPassword(encoder.encode(rawPassword));
-		mapper.insertOne(user);
+		
+		//insert
+		repository.save(user);
 	}
 	
 	/*Get users*/
 	@Override
 	public List<MUser> getUsers(MUser user) {
-		return mapper.findMany(user);
+		return repository.findAll();
 	}
 	
-	/*Get user*/
+	/*Get user(1 record)*/
 	@Override
 	public MUser getUserOne(String userId) {
-		return mapper.findOne(userId);
+		Optional<MUser> option = repository.findById(userId);
+		MUser user = option.orElse(null);
+		return user;
 	}
 	
 	/*Update user*/
-	@Transactional
 	@Override
 	public void updateUserOne(String userId, String password, String userName) {
-		mapper.updateOne(userId, password, userName);
 		
 		//Password encryption
 		String encryptPassword = encoder.encode(password);
 		
-		mapper.updateOne(userId, encryptPassword, userName);
-		//Raise an exception
-//		int i = 1/0;
+		//User update
+		repository.updateUser(userId, encryptPassword, userName);
 	}
 	
 	/*Delete user*/
+	@Transactional
 	@Override
 	public void deleteUserOne(String userId) {
-		int count = mapper.deleteOne(userId);
+		repository.deleteById(userId);
 	}
 	
-	/*Get login user information*/
+	/*Get login user*/
 	@Override
 	public MUser getLoginUser(String userId) {
-		return mapper.findLoginUser(userId);
+		return repository.findLoginUser(userId);
+//		Optional<MUser> option = repository.findById(userId);
+//		MUser user = option.orElse(null);
+//		return user;
 	}
+
 }
